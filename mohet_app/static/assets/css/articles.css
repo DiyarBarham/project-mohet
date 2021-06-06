@@ -1,0 +1,12 @@
+.asd{
+    margin: 2px;
+  }
+  .navbar-mobile li{
+  overflow: hidden;
+}
+.navbar-mobile li a{
+  float: right;
+}
+  #thename{
+  border: none;
+}

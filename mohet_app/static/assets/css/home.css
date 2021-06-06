@@ -1,0 +1,9 @@
+#thename{
+    border: none;
+  }
+  .navbar-mobile li{
+    overflow: hidden;
+  }
+  .navbar-mobile li a{
+    float: right;
+  }

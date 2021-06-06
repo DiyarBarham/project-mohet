@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>مستخدم جديد</title>
+    {% load static %}
+
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'styles.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="d-flex" id="wrapper" dir="rtl">
+      <!-- Sidebar-->
+      <div class="border-end bg-white pull-end" dir="rtl" id="sidebar-wrapper">
+        <div class="sidebar-heading border-bottom bg-light">محيط</div>
+        <div class="list-group list-group-flush">
+          <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/home">الرئيسية</a>
+          <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/new_article">اضافة مقال جديد</a>
+          <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/accept_article">موافقة على نشر مقال</a>
+          <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/admin/new_user">اضافة مستخدم جديد</a>
+      </div>
+      </div>
+      <!-- Page content wrapper-->
+      <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <nav
+          class="navbar navbar-expand-lg navbar-light bg-light border-bottom"
+        >
+          <div class="container-fluid">
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                <li class="nav-item active"><h3>مرحبًا {{user.first_name}} </h3></li>
+
+
+            </ul>
+            <a href="/admin/logout"><button class="btn btn-danger">تسجيل خروج</button></a>
+              
+            </div>
+          </div>
+        </nav> <br><br>
+        <!-- Page content-->
+        <div class="card">
+          <div class="card-body">
+            <form action="/admin/new" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="fname">الاسم الأول</label>
+                <input
+                  type="input"
+                  class="form-control"
+                  id="fname"
+                  name="fname"
+                  aria-describedby="emailHelp"
+                  placeholder="ادخل اسمك الأول"
+                />
+              </div>
+              <div class="form-group">
+                <label for="lname">الإسم الأخير</label>
+                <input
+                  type="input"
+                  class="form-control"
+                  id="lname"
+                  name="lname"
+                  aria-describedby="emailHelp"
+                  placeholder="ادخل اسمك الاخير"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">الإيميل</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  aria-describedby="emailHelp"
+                  placeholder="ادخل ايميلاك"
+                />
+              </div>
+              <div class="form-group">
+                <label for="pass">كلمة السر</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  name="pass"
+                  id="pass"
+                  placeholder="كلمة السر"
+                />
+              </div>
+              <fieldset class="form-group">
+                <div class="row">
+                  <legend class="col-form-label col-sm-2 pt-0">الجنس</legend>
+                  <div class="col-sm-10">
+                    <div class="form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gridRadios"
+                        id="gridRadios1"
+                        value="male"
+                        checked
+                      />
+                      <label class="form-check-label" for="gridRadios1">
+                        ذكر
+                      </label>
+                    </div>
+                    <div class="form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gridRadios"
+                        id="gridRadios2"
+                        value="female"
+                      />
+                      <label class="form-check-label" for="gridRadios2">
+                        أنثى
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <div class="form-group">
+                <label
+                  for="example-datetime-local-input"
+                  class="col-2 col-form-label"
+                  >تاريخ الميلاد</label
+                >
+                <div class="col-10">
+                  <input
+                    class="form-control date"
+                    type="date"
+                    name="date"
+                    id="example-local-input"
+                  />
+                </div>
+              </div>
+              <label class="mr-sm-2" for="inlineFormCustomSelect"
+                >الوظيفة</label
+              >
+              <div class="form-group">
+                <select
+                  class="custom-select mb-2 mr-sm-2 mb-sm-0"
+                  name="job"
+                  id="inlineFormCustomSelect"
+                >
+                  {%for job in jobs%}
+                  <option value="{{job.name}}">{{job.name}}</option>
+                  {%endfor%}
+                </select>
+              </div> <br>
+              <button type="submit" class="btn btn-primary">
+                ادخل مستخدم جديد
+              </button>
+            </form>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
